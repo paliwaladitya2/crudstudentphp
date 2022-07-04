@@ -1,9 +1,4 @@
 <?php
-    session_start();
-    if($_SESSION['loggedin']!="true" || ($_SESSION['loggedin']!=true)){
-       header("location: login.php");
-       exit;
-    }
     $id = $name = $class = $section = $country = $state = $city = '';
     $rowError=false;  
     $successAlert=false;
@@ -61,6 +56,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';}
     ?>
+    <?php include "components/navbar.php"; ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">

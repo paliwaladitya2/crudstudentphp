@@ -58,7 +58,7 @@
 													echo "<td>" . $row['city'] . "</td>";
 													echo "<td>";
 														
-														echo '<a href="update.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Update Details" data-toggle="tooltip"><span class="fa fa-pencil"></span></a></td>"';
+														echo '<a href="update.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Update Details" data-toggle="tooltip"><span class="fa fa-pencil"></span></a></td>';
 													
 													echo "<td>";	
 														echo '<a href="javascript:void(0)" title="Delete Student" class="delete_btn_ajax btn btn-danger" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';

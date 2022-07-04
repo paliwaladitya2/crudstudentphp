@@ -1,13 +1,3 @@
-<?php
-
-	session_start();
-	if($_SESSION['loggedin']!="true" || ($_SESSION['loggedin']!=true)){
-   	header("location: login.php");
-   	exit;
-}
-
-?>
-
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="welcome.php">Student CRUD LOGIN </a>
