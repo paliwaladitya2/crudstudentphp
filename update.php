@@ -3,6 +3,7 @@
     include "components/db.php";
     include "components/navbar.php"; 
     $id = $name = $class = $section = $country = $state = $city = '';
+    $id=$_GET['id'];
     $sql1 = "select * from student where id='$id'";
 
     $result = mysqli_query($con, $sql1);
@@ -11,7 +12,6 @@ if ($result){
 
     $row = mysqli_fetch_array($result);
 
-        $id= $row["id"];
         $name= $row["name"];
         $class= $row["class"];
         $section= $row["section"];
@@ -19,22 +19,6 @@ if ($result){
         $state= $row["state"];
         $city= $row["city"];
 
-}
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $id=$_POST['id'];
-        $name= $_POST["name"];
-        $class= $_POST["class"];
-        $section= $_POST["section"];
-        $country= $_POST["country"];
-        $state= $_POST["state"];
-        $city= $_POST["city"];
-        $sql=" update student set name='$name',class='$class',section='$section',country='$country',state='$state',city='$city' where id='$id'";
-        if (mysqli_query($con, $sql)) {
-        echo "Record updated successfully";
-        header("location: welcome.php");
-        } else {
-        echo "Error updating record: " . mysqli_error($con);
-        }
 }
 
 
@@ -65,10 +49,10 @@ echo '
                 <div class="col-md-12">
                     <h2 class="mt-5">Update Student Record</h2>
                     <p>Please fill this form and submit to update this student record in the database.</p>
-                    <form action="'. htmlspecialchars($_SERVER["PHP_SELF"]).'" method="post">
+                    <form action="updatescript.php" method="post">
                         <div class="form-group">
                             <label>Roll. No.</label>
-                            <input type="number" name="id" class="form-control" value="'.$id.' " required>
+                            <input type="number" name="id" class="form-control" value="'.$id.'" required>
                             <span class="invalid-feedback">Error</span>
                         </div>
                         <div class="form-group">
