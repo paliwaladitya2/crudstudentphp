@@ -1,5 +1,5 @@
 <?php
-    $id = $name = $class = $section = $country = $state = $city = '';
+    $id = $name = $class = $section = $country = $state = $city = $image='';
     $rowError=false;  
     $successAlert=false;
     if($_SERVER["REQUEST_METHOD"] == "POST")
@@ -12,6 +12,16 @@
         $country= $_POST["country"];
         $state= $_POST["state"];
         $city= $_POST["city"];
+        $image= $_FILES["image"];
+        $filename = $image['name'];
+        $fileerror = $image['error'];
+        $filetmp = $image['tmp_name'];
+
+        $fileext = explode('.',$filename);
+        $filecheck = strtolower(end($fileext));
+        $fileextstored = array('png','jpg','jpeg');
+        
+
         $existsql="select * from student where id='$id'";
         $result=mysqli_query($con,$existsql);
         $numexistrows= mysqli_num_rows($result); 
@@ -20,10 +30,17 @@
             $rowError=true;
         }
         else
-        {
-            $sql = "INSERT INTO `student` (`id`, `name`, `class`, `section`, `country`, `state`, `city`) VALUES ('$id', '$name', '$class', '$section', '$country', '$state', '$city')";
+        {   
+            if(in_array($filecheck,$fileextstored))
+            {
+                $destfile="images/".$filename;
+                move_uploaded_file($filetmp,$destfile);
+                
+            
+            $sql = "INSERT INTO `student` (`id`, `name`, `class`, `section`, `country`, `state`, `city`, `image`) VALUES ('$id', '$name', '$class', '$section', '$country', '$state', '$city', '$destfile');";
             $result=mysqli_query($con,$sql);
             $successAlert = true;
+            }
         }
     mysqli_close($con);
     }
@@ -36,6 +53,7 @@
     <title>Create Student Record</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="jqajax.js"></script>
     <style>
         .wrapper{
             width: 600px;
@@ -63,7 +81,7 @@
                 <div class="col-md-12">
                     <h2 class="mt-5">Create Student Record</h2>
                     <p>Please fill this form and submit to add student record to the database.</p>
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>Roll. No.</label>
                             <input type="number" name="id" class="form-control" value="<?php echo $id; ?> " required>
@@ -97,6 +115,11 @@
                         <div class="form-group">
                             <label>City</label>
                             <input type="text" name="city" class="form-control" value="<?php echo $city; ?>" required>
+                            <span class="invalid-feedback">Error</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" name="image" class="form-control" value="<?php echo $image; ?>" required>
                             <span class="invalid-feedback">Error</span>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnadd">Submit</button>

@@ -31,3 +31,8 @@ Swal.fire({
 {
     location.herf = "welcome.php";
 }
+
+  document.getElementById("btnadd").onclick = function()
+  {
+    location.herf = "welcome.php";
+  }

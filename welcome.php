@@ -44,10 +44,12 @@
 														echo "<th>Country</th>";
 														echo "<th>State</th>";
 														echo "<th>City</th>";
+														echo "<th>Student Image</th>";
 													echo "</tr>";
 												echo "</thead>";
 											echo "<tbody>";
 												while($row = mysqli_fetch_array($result)){
+												
 												echo "<tr>";
 													echo "<td>" . $row['id'] . "</td>";
 													echo "<td>" . $row['name'] . "</td>";
@@ -56,6 +58,7 @@
 													echo "<td>" . $row['country'] . "</td>";
 													echo "<td>" . $row['state'] . "</td>";
 													echo "<td>" . $row['city'] . "</td>";
+													echo "<td>" . $row['image']."</td>";
 													echo "<td>";
 														
 														echo '<a href="update.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Update Details" data-toggle="tooltip"><span class="fa fa-pencil"></span></a></td>';
