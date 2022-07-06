@@ -58,7 +58,7 @@
 													echo "<td>" . $row['country'] . "</td>";
 													echo "<td>" . $row['state'] . "</td>";
 													echo "<td>" . $row['city'] . "</td>";
-													echo "<td>" . $row['image']."</td>";
+													echo "<td><img src='" . $row['image']."' width='100' height='100'></td>";
 													echo "<td>";
 														
 														echo '<a href="update.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Update Details" data-toggle="tooltip"><span class="fa fa-pencil"></span></a></td>';
