@@ -120,7 +120,6 @@
                         <div class="form-group">
                             <label>Image</label>
                             <input type="file" name="image" class="form-control" value="<?php echo $image; ?>" required>
-                            <span class="invalid-feedback">Error</span>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnadd">Submit</button>
                         <a href="welcome.php" class="btn btn-secondary ml-2">Cancel</a>

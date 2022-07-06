@@ -1,3 +1,13 @@
+<?php
+
+	session_start();
+    if($_SESSION['loggedin']="true" || ($_SESSION['loggedin']=true)){
+       header("location: welcome.php");
+       exit;
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

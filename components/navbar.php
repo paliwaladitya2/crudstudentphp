@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="welcome.php">Student CRUD LOGIN </a>
@@ -14,10 +16,14 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="register.php">Register</a>
+        </li></ul>
+        <ul class="navbar-nav">
+		    <li class="nav-item">
+          <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </li> 
         <li class="nav-item">
-          <a class="nav-link" href="logout.php">LogOut</a>
-        </li> 
+          <a class="nav-link" href="useraccount.php"><i class="fas fa-user-circle"></i> Profile</a>
+        </li>
       </ul>
     </div>
   </div>
