@@ -20,13 +20,14 @@
         require_once "components/db.php";
         require 'components/navbar.php';
 		echo '<h1 class=text-center>Welcome</h1>';
-        	
+        	echo '<div class="wrapper">';
         		echo '<div class="container-fluid">';	
 				 	echo '<div class="row">';
                 		echo '<div class="col-md-12">';
                     		echo '<div class="mt-5 mb-3 clearfix" margin: auto;>';	
 								echo '<h2 class="text-center">Student Details</h2>';
                         		echo '<a href="create.php" class="btn btn-success"><i class="fa fa-plus"></i> Add New Student</a>';
+								echo "<br><br>";
                     			echo '</div>';
                     			echo '<br>';
                     			$sql = "SELECT * FROM student order by id ASC;";
@@ -41,10 +42,9 @@
 														echo "<th>Name</th>";
 														echo "<th>Class</th>";
 														echo "<th>Section</th>";
-														echo "<th>Country</th>";
-														echo "<th>State</th>";
-														echo "<th>City</th>";
-														echo "<th>Student Image</th>";
+														echo "<th>View Details</th>";
+														echo "<th>Update Details</th>";
+														echo "<th>Delete</th>";
 													echo "</tr>";
 												echo "</thead>";
 											echo "<tbody>";
@@ -55,14 +55,10 @@
 													echo "<td>" . $row['name'] . "</td>";
 													echo "<td>" . $row['class'] . "</td>";
 													echo "<td>" . $row['section'] . "</td>";
-													echo "<td>" . $row['country'] . "</td>";
-													echo "<td>" . $row['state'] . "</td>";
-													echo "<td>" . $row['city'] . "</td>";
-													echo "<td><img src='" . $row['image']."' width='100' height='100'></td>";
 													echo "<td>";
-														
+														echo '<a href="read.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Open Details" data-toggle="tooltip"><span class="fa fa-eye"></span></a></td>';
+													echo "<td>";
 														echo '<a href="update.php?id='. $row['id'] .'" class="mr-3 btn btn-secondary" title="Update Details" data-toggle="tooltip"><span class="fa fa-pencil"></span></a></td>';
-													
 													echo "<td>";	
 														echo '<a href="javascript:void(0)" title="Delete Student" class="delete_btn_ajax btn btn-danger" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
 														echo '<input type="hidden" class="delete_id_value" value='.$row["id"].'></td>';	
@@ -82,7 +78,7 @@
                         		echo "Oops! Something went wrong. Please try again later.";
                     		}
 					echo '</div>';
-					
+					echo '</div>';
 					echo '</div>';
 					echo '</div>';
         mysqli_close($con);
@@ -102,7 +98,7 @@
   			transform: translate(-50%, -50%);
 		}
         .wrapper{
-            width: 600px;
+            width: 1000px;
             margin: 0 auto;
         }
         table tr td:last-child{

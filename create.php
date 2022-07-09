@@ -1,5 +1,5 @@
 <?php
-    $id = $name = $class = $section = $country = $state = $city = $image='';
+    $id = $name = $class = $section = $countryID = $stateID = $cityID = $image='';
     $response=0;
     $rowError=false;  
     $successAlert=false;
@@ -10,10 +10,23 @@
         $name= $_POST["name"];
         $class= $_POST["class"];
         $section= $_POST["section"];
-        $country= $_POST["country"];
-        $state= $_POST["state"];
-        $city= $_POST["city"];
+        $countryID= $_POST["country"];
+        $stateID= $_POST["state"];
+        $cityID= $_POST["city"];
         $image= $_FILES["image"];
+
+        $cresult=mysqli_query($con,"select name from countries where id='$countryID'");
+        $row1 = mysqli_fetch_array($cresult);
+        $countryname=$row1['name'];
+
+        $sresult=mysqli_query($con,"select name from states where id='$stateID'");
+        $row2=mysqli_fetch_array($sresult);
+        $statename=$row2['name'];
+
+        $ctresult=mysqli_query($con,"select name from cities where id='$cityID'");
+        $row3=mysqli_fetch_array($ctresult);
+        $cityname=$row3['name'];
+
         $filename = $image['name'];
         $fileerror = $image['error'];
         $filetmp = $image['tmp_name'];
@@ -37,7 +50,7 @@
                 move_uploaded_file($filetmp,$destfile);
                 $response = $destfile;
             
-            $sql = "INSERT INTO `student` (`id`, `name`, `class`, `section`, `country`, `state`, `city`, `image`) VALUES ('$id', '$name', '$class', '$section', '$country', '$state', '$city', '$destfile');";
+            $sql = "INSERT INTO `student` (`id`, `name`, `class`, `section`, `country`, `state`, `city`, `image`) VALUES ('$id', '$name', '$class', '$section', '$countryname', '$statename', '$cityname', '$destfile');";
             $result=mysqli_query($con,$sql);
             $successAlert = true;
             }
@@ -53,6 +66,8 @@
     <title>Create Student Record</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/jqajax.js"></script>
     <style>
@@ -69,8 +84,8 @@
             background: white;
         }
         .image-preview{
-            width:300px;
-            min-height:100px;
+            width:200px;
+            min-height:200px;
             border: 2px solid #dddddd;
             margin-top: 15px;
 
@@ -130,7 +145,7 @@
                         </div>
                         <div class="form-group">
                             <label>Country</label>
-                            <select class="form-control" id="country-dropdown">
+                            <select class="form-control" id="country-dropdown" name="country">
                                 <option value="">Select Country</option>
                                 <?php
                                 require_once "components/db.php";
@@ -146,22 +161,19 @@
                         </div>
                         <div class="form-group">
                             <label>State</label>
-                            <select class="form-control" id="state-dropdown"></select>   
+                            <select class="form-control" id="state-dropdown" name="state"></select>   
                             <span class="invalid-feedback">Error</span>
                         </div>
                         <div class="form-group">
                             <label>City</label>
-                            <select class="form-control" id="city-dropdown"></select>                            
+                            <select class="form-control" id="city-dropdown" name="city"></select>                            
                             <span class="invalid-feedback">Error</span>
                         </div>
                         <div class="form-group">
                             <label>Image</label>
                             <input class="form-control" type="file" name="image" id="image">
                         </div>
-                        <div class="image-preview" id="imagePreview">
-                            <img src="" alt="Image Preview" class="image-preview__image">
-                            <span class="image-preview__default-text">Image Preview</span>
-                        </div><br>
+                        <br>
                         <button type="submit" class="btn btn-primary" id="btnadd">Submit</button>
                         <a href="welcome.php" class="btn btn-secondary ml-2">Cancel</a>
                     </form>
@@ -171,6 +183,23 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script>
+        function filePreview(input){
+            if(input.files && input.files[0]){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#createform + img').remove();
+                    $('#image').after('<br><img src="'+e.target.result+'" margin-top:"10px" width="200" height="150"/>');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#image").change(function(){
+            filePreview(this); 
+        });
+    </script>
+    <script>
+
         $(document).ready(function() {
         $('#country-dropdown').on('change', function() {
         var country_id = this.value;
