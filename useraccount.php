@@ -4,7 +4,7 @@
         header("location: login.php");
         exit;
      }
-    $email=$password=$userid='';
+    $email=$password=$userid=$userimage='';
     $email=$_SESSION['email'];
     include "components/db.php";
     $sql="select * from users where email='$email';";
@@ -12,6 +12,7 @@
     $data=mysqli_fetch_array($result);
         $password=$data['password'];
         $userid=$data['id'];
+        $userimage=$data['userimage'];
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +33,7 @@
                     <td>ID</td>
                     <td>Email</td>
                     <td>Password</td>
+                    <td>User Image</td>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +41,7 @@
                     <td><?php echo $userid;?></td>
                     <td><?php echo $email;?></td>
                     <td><?php echo $password;?></td>
+                    <td><img src="<?php echo $userimage; ?>" width='100' height='100'></td>
                 </tr>
             </tbody>
         </table>
